@@ -1,6 +1,7 @@
 # Controller Events for Laravel
 
-
+Explain why this is a good idea.
+...
 
 ## Installation
 
@@ -28,6 +29,7 @@ protected $listen = [
 
 ```php
 use \ostark\ControllerEvents\Events\BeforeAction;
+use \ostark\ControllerEvents\Events\AfterAction;
 
 class YourBeforeListener 
 {
@@ -44,7 +46,7 @@ class YourBeforeListener
 ```php
 use \ostark\ControllerEvents\Events\AfterAction;
 
-class YourBeforeListener 
+class YourAfterListener 
 {
     public function handle(AfterAction $event) 
     {
@@ -57,12 +59,15 @@ class YourBeforeListener
 }
 ```
 
-
 ## Controller Events vs Middleware
 
-Why? How? What?
+* access to controller vs request/response only
+* access to action name and parameters
 
 ## Controller Events vs Controller::__construct()
 
-Why? How? What?
+* knowledge about controller action
+* knowledge about response
+* run things after controller action
+
 
