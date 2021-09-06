@@ -20,12 +20,14 @@ class ControllerDispatcherWithEvents extends ControllerDispatcher
      */
     public function dispatch(Route $route, $controller, $method)
     {
-        if (!($controller instanceof \Illuminate\Routing\Controller)) {
+        if (! ($controller instanceof \Illuminate\Routing\Controller)) {
             throw new \InvalidArgumentException('Invalid type. $controller is of type: ' . gettype($controller));
         }
 
         $parameters = $this->resolveClassMethodDependencies(
-            $route->parametersWithoutNulls(), $controller, $method
+            $route->parametersWithoutNulls(),
+            $controller,
+            $method
         );
 
         event(new BeforeAction(
@@ -48,5 +50,4 @@ class ControllerDispatcherWithEvents extends ControllerDispatcher
 
         return $result;
     }
-
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace ostark\LaravelControllerEvents\Events;
-
 
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\Route;
@@ -22,10 +20,10 @@ class AfterAction
         array $parameters,
         $result = null
     ) {
-        $this->route      = $route;
+        $this->route = $route;
         $this->controller = $controller;
-        $this->method     = $method;
+        $this->method = $method;
         $this->parameters = $parameters;
-        $this->result     = $result;
+        $this->result = $result;
     }
 }

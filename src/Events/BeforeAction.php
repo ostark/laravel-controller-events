@@ -18,9 +18,9 @@ class BeforeAction
         string $method,
         array $parameters
     ) {
-        $this->route      = $route;
+        $this->route = $route;
         $this->controller = $controller;
-        $this->method     = $method;
+        $this->method = $method;
         $this->parameters = $parameters;
     }
 }
