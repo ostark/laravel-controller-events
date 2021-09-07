@@ -13,6 +13,10 @@ class AfterAction
     public Controller $controller;
     public string $method;
     public array $parameters = [];
+
+    /**
+     * @var mixed|null
+     */
     public $result = null;
 
     public function __construct(
