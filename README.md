@@ -29,7 +29,6 @@ protected $listen = [
 
 ```php
 use \ostark\ControllerEvents\Events\BeforeAction;
-use \ostark\ControllerEvents\Events\AfterAction;
 
 class YourBeforeListener 
 {
@@ -54,7 +53,7 @@ class YourAfterListener
         // $event->controller
         // $event->method
         // $event->parameters
-        // $event->result
+        // $event->response
     }
 }
 ```

@@ -36,17 +36,17 @@ class ControllerDispatcherWithEvents extends ControllerDispatcher
         ));
 
         // Run the controller action
-        $result = $controller->{$method}(...array_values($parameters));
+        $response = $controller->{$method}(...array_values($parameters));
 
         event(new AfterAction(
             $route,
             $controller,
             $method,
             $parameters,
-            $result
+            $response
         ));
 
-        return $result;
+        return $response;
     }
 
 }
