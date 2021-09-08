@@ -22,18 +22,27 @@ test('events are dispatched', function () {
     Event::assertDispatched(AfterAction::class);
 });
 
+test('can access and modify controller in BeforeAction event', function () {
+
+    Event::listen(function (BeforeAction $event) {
+        $event->controller->testProp = 99;
+    });
+
+    Event::listen(function (AfterAction $event) {
+        $GLOBALS['TEST_PROP'] = $event->controller->testProp;
+    });
+
+    $this->get('/dogs/1');
+    expect($GLOBALS['TEST_PROP'])->toBe(99);
+});
 
 
-
-
-test('can modify action parameters on the fly ', function () {
+test('can modify action parameters in BeforeAction event', function () {
 
     Event::listen(function (BeforeAction $event) {
         $event->parameters->set('id', 123456);
     });
 
     $response = $this->get('/dogs/1');
-
     expect($response->content())->toBe('edit 123456');
-
 });
