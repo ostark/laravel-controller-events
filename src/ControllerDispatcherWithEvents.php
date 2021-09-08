@@ -4,6 +4,7 @@ namespace ostark\LaravelControllerEvents;
 
 use Illuminate\Routing\ControllerDispatcher;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Collection;
 use ostark\LaravelControllerEvents\Events\AfterAction;
 use ostark\LaravelControllerEvents\Events\BeforeAction;
 
@@ -24,9 +25,9 @@ class ControllerDispatcherWithEvents extends ControllerDispatcher
             throw new \InvalidArgumentException('Invalid type. $controller is of type: ' . gettype($controller));
         }
 
-        $parameters = $this->resolveClassMethodDependencies(
+        $parameters = new ActionParameters($this->resolveClassMethodDependencies(
             $route->parametersWithoutNulls(), $controller, $method
-        );
+        ));
 
         event(new BeforeAction(
             $route,
@@ -35,7 +36,7 @@ class ControllerDispatcherWithEvents extends ControllerDispatcher
         ));
 
         // Run the controller action
-        $response = $controller->{$method}(...array_values($parameters));
+        $response = $controller->{$method}(...$parameters->values());
 
         event(new AfterAction(
             $route,
