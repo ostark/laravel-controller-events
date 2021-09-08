@@ -21,3 +21,18 @@ test('events are dispatched', function () {
     Event::assertDispatched(BeforeAction::class);
     Event::assertDispatched(AfterAction::class);
 });
+
+test('can access and modify controller in BeforeAction event', function () {
+
+    Event::listen(function (BeforeAction $event) {
+        $event->controller->testProp = 99;
+    });
+
+    Event::listen(function (AfterAction $event) {
+        $GLOBALS['TEST_PROP'] = $event->controller->testProp;
+    });
+
+    $this->get('/dogs/1');
+
+    expect($GLOBALS['TEST_PROP'])->toBe(99);
+});

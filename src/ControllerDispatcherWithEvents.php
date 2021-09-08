@@ -31,7 +31,6 @@ class ControllerDispatcherWithEvents extends ControllerDispatcher
         event(new BeforeAction(
             $route,
             $controller,
-            $method,
             $parameters
         ));
 
@@ -41,7 +40,6 @@ class ControllerDispatcherWithEvents extends ControllerDispatcher
         event(new AfterAction(
             $route,
             $controller,
-            $method,
             $parameters,
             $response
         ));

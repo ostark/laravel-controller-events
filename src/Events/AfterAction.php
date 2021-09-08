@@ -11,7 +11,6 @@ class AfterAction
 {
     public Route $route;
     public Controller $controller;
-    public string $method;
     public array $parameters = [];
     /**
      * @var \Symfony\Component\HttpFoundation\Response|mixed|null
@@ -23,20 +22,17 @@ class AfterAction
      *
      * @param \Illuminate\Routing\Route      $route
      * @param \Illuminate\Routing\Controller $controller
-     * @param string                         $method
      * @param array                          $parameters
      * @param \Symfony\Component\HttpFoundation\Response|mixed|null $response
      */
     public function __construct(
         Route $route,
         Controller $controller,
-        string $method,
         array $parameters,
         $response = null
     ) {
         $this->route      = $route;
         $this->controller = $controller;
-        $this->method     = $method;
         $this->parameters = $parameters;
         $this->response     = $response;
     }

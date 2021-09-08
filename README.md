@@ -35,8 +35,8 @@ class YourBeforeListener
     public function handle(BeforeAction $event) 
     {
         // $event->route
+        // $event->route->getActionMethod()
         // $event->controller
-        // $event->method
         // $event->parameters
     }
 }
@@ -49,9 +49,9 @@ class YourAfterListener
 {
     public function handle(AfterAction $event) 
     {
-        // $event->route
+        // $event->route 
+        // $event->route->getActionMethod()
         // $event->controller
-        // $event->method
         // $event->parameters
         // $event->response
     }

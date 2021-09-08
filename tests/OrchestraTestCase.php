@@ -33,6 +33,8 @@ class OrchestraTestCase extends Orchestra
  */
 class DogsController extends Controller
 {
+    public $testProp = 1;
+
     public function index() {
         return 'index';
     }
