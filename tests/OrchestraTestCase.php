@@ -42,7 +42,7 @@ class DogsController extends Controller
         return "edit $id";
     }
     public function update($id, RandomObject $o) {
-        return "update $id";
+        return "update $id {$o->name}";
     }
 }
 class RandomObject

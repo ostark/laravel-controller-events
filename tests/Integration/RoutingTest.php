@@ -46,3 +46,16 @@ test('can modify action parameters in BeforeAction event', function () {
     $response = $this->get('/dogs/1');
     expect($response->content())->toBe('edit 123456');
 });
+
+
+test('can modify unnamed action parameter in BeforeAction event', function () {
+
+    Event::listen(function (BeforeAction $event) {
+        $object = $event->parameters->get(0);
+        $object->name = 'modified';
+        $event->parameters->set(0, $object);
+    });
+
+    $response = $this->post('/dogs/1');
+    expect($response->content())->toBe('update 1 modified');
+});
