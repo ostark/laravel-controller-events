@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Event;
 use ostark\LaravelControllerEvents\Events\AfterAction;
 use ostark\LaravelControllerEvents\Events\BeforeAction;
+use ostark\LaravelControllerEvents\Tests\RandomObject;
 
 test('requests hit controller', function () {
     $index = $this->get('/dogs');
@@ -36,26 +37,38 @@ test('can access and modify controller in BeforeAction event', function () {
     expect($GLOBALS['TEST_PROP'])->toBe(99);
 });
 
+test('can overwrite action parameters in BeforeAction event', function () {
+
+    Event::listen(function (BeforeAction $event) {
+        $event->parameters->set('id', 5000);
+    });
+
+    $response = $this->get('/dogs/1');
+    expect($response->content())->toBe('edit 5000');
+});
 
 test('can modify action parameters in BeforeAction event', function () {
 
     Event::listen(function (BeforeAction $event) {
-        $event->parameters->set('id', 123456);
+        $event->parameters->modifyValue('id', function ($value) {
+            return $value + 1000;
+        });
     });
 
     $response = $this->get('/dogs/1');
-    expect($response->content())->toBe('edit 123456');
+    expect($response->content())->toBe('edit 1001');
 });
 
 
 test('can modify unnamed action parameter in BeforeAction event', function () {
 
     Event::listen(function (BeforeAction $event) {
-        $object = $event->parameters->get(0);
-        $object->name = 'modified';
-        $event->parameters->set(0, $object);
+        $event->parameters->modifyValue(RandomObject::class, function ($random) {
+            $random->name = 'modified';
+            return $random;
+        });
     });
 
-    $response = $this->post('/dogs/1');
-    expect($response->content())->toBe('update 1 modified');
+    $response = $this->post('/dogs/5');
+    expect($response->content())->toBe('update 5 modified');
 });
